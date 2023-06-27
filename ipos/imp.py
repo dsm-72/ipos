@@ -6,7 +6,7 @@ __all__ = ['Module', 'Loader', 'ModuleSpec', 'VariableDict', 'FallbackType', 'Im
            'module_from_str', 'getmodule', 'ImpItem', 'Fallbacks', 'BaseImp', 'ImpSubSpec', 'ImpSpec', 'Imp']
 
 # %% ../nbs/00_core.ipynb 3
-import sys, types, inspect, importlib, warnings
+import sys, types, inspect, importlib, warnings, itertools
 from importlib.util import (LazyLoader, find_spec, module_from_spec)
 from importlib.abc import Loader
 from importlib.machinery import ModuleSpec
@@ -403,7 +403,7 @@ class BaseImp:
         
     """    
     _ : KW_ONLY
-    namespace: Dict[str, Any] = field(default_factory=globals, repr=False)
+    namespace: VariableDict = field(default_factory=globals, repr=False)
     _updates: VariableDict = field(default_factory=dict, repr=False, init=False)
 
     def update_fallbacks(self, other: FallbackType = None, items: ImpItemsType = None) -> 'BaseImp':
@@ -411,7 +411,7 @@ class BaseImp:
         self.fallbacks.update(fbnew)
         return self
     
-    def make_updates_failsafe(self, updates: Optional[VariableDict] = dict()) -> VariableDict:
+    def give_updates_fallbacks(self, updates: Optional[VariableDict] = dict()) -> VariableDict:
         oldvals = getattr(self, '_updates', (updates or dict()))
         oldvals.update(updates)
         updates = self.fallbacks.give(oldvals)                
@@ -423,10 +423,22 @@ class BaseImp:
         namespace: Optional[VariableDict] = None,
     ) -> VariableDict:        
         updates = getattr(self, '_updates', updates)
-        namespace = getattr(self, 'namespace', (namespace or globals()))
+        namespace = getattr(self, 'namespace', namespace)
+        namespace = namespace or globals()
         namespace.update(updates)
         self.namespace = namespace
         return namespace
+    
+    def squash_name_error(self, name:str, default: Optional[Any] = None) -> 'BaseImp':
+        namespace = getattr(self, 'namespace', None)
+        namespace = namespace or globals()
+        
+        update = dict()
+        update[name] = namespace.get(name, default)
+
+        namespace.update(update)
+        self.namespace = namespace
+        return self
 
 # %% ../nbs/00_core.ipynb 20
 @dataclass
@@ -547,7 +559,7 @@ class ImpSubSpec(BaseImp):
         # print('get_updates')
         updates = self.fetch()
         # print('get_updates', updates)
-        updates = self.make_updates_failsafe(updates)
+        updates = self.give_updates_fallbacks(updates)
         # print('get_updates > failsafed', updates)
         self._updates = updates
         return updates
@@ -564,6 +576,17 @@ class ImpSubSpec(BaseImp):
         updates = self.get_updates()
         self.update_namespace(updates, self.namespace)     
         return self
+    
+    def expected_items(self) -> List[str]:
+        """
+        Returns a list of expected names for the import.
+
+        Returns
+        -------
+        List[str]
+            A list of expected names for the import.
+        """
+        return [imp_item.varname for imp_item in self.items]    
 
 # %% ../nbs/00_core.ipynb 25
 @dataclass
@@ -635,6 +658,25 @@ class ImpSpec(ModuleSpec, BaseImp):
         
         self._updates = updates
         self.update_namespace(updates, self.namespace)
+        return updates
+    
+    def _import(self) -> VariableDict:
+        self._imp_main()
+        updates = self._imp_subs()
+        self._updates = updates
+        self.update_namespace(updates, self.namespace)
+        return updates
+    
+    def all_expected_items(self):
+        expected_items = []
+        for subspec in self.subspecs:
+            expected_items.extend(subspec.expected_items())
+        return expected_items
+    
+    def squash_all_name_errors(self):
+        for name in self.all_expected_items():
+            self.squash_name_error(name)    
+        return self    
 
 # %% ../nbs/00_core.ipynb 27
 @dataclass
@@ -685,17 +727,41 @@ class Imp(BaseImp):
     _ : KW_ONLY
     _module: Module = field(init=False, repr=False, default=None)
     _spec: ImpSpec = field(init=False, repr=False, default=None)
+    _squash_name_errors: Optional[bool] = field(default=True)
+    _reload: Optional[bool] = field(default=False)
+
+    def _make_spec(self):
+        spec = getattr(self, '_spec', None)
+        if spec is not None:
+            return spec
+        
+        spec = ImpSpec(self.name, self.nick, self.lazy, self.subspecs, self.fallbacks)
+        self._spec = spec
+        return spec
+        
+        
+
+    def _import(self):
+        self._spec = self._make_spec()
+
+        prev = sys.modules.get(self.name, None)
+        if prev is not None and not self._reload:
+            return self
+        
+        self._updates = self._spec._import()
+        self._module = sys.modules[self.name]
+        self.update_namespace(self._updates, self.namespace)
+        return self
 
     def load(self):
-        self._spec = ImpSpec(self.name, self.nick, self.lazy, self.subspecs, self.fallbacks)
-        self._spec._imp_main()
-        self._spec._imp_subs()
-        self._module = sys.modules[self.name]
+        self._import()
+        if self._squash_name_errors:
+            self.squash_all_name_errors()
+        return self
 
     def __post_init__(self):
         if isinstance(self.fallbacks, dict):
-            self.fallbacks = Fallbacks.from_dict(self.fallbacks)
-            
+            self.fallbacks = Fallbacks.from_dict(self.fallbacks)            
         if not self.delay:
             self.load()
 
@@ -744,3 +810,12 @@ class Imp(BaseImp):
         """
         return getattr(self._module, key, None)
 
+    def squash_all_name_errors(self):
+        spec = getattr(self, '_spec', None)
+        if spec is None:
+            spec = self._make_spec()
+            self._spec = spec
+        self._spec.squash_all_name_errors()
+        return self
+
+    
