@@ -123,6 +123,7 @@ def is_var_imp(name: str) -> bool:
     """
     return name in globals()
 
+
 def is_mod_or_var(name: str):
     """
     Check if a given name exists either as a module or a variable.
@@ -745,8 +746,13 @@ class Imp(BaseImp):
         self._spec = self._make_spec()
 
         prev = sys.modules.get(self.name, None)
-        if prev is not None and not self._reload:
-            return self
+        modq = getattr(self, '_module', None)
+        if prev is not None:
+            if modq is None:
+                self._module = sys.modules[self.name]
+                return self
+            if not self._reload:
+                return self
         
         self._updates = self._spec._import()
         self._module = sys.modules[self.name]
@@ -818,4 +824,6 @@ class Imp(BaseImp):
         self._spec.squash_all_name_errors()
         return self
 
+    def is_loaded(self):
+        return is_mod(self._module)
     
