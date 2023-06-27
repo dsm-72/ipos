@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "ipos"
+  site-url: "https://dsm-72.github.io/ipos"
+  description: "a devilish import package"
+  repo-branch: main
+  repo-url: "https://github.com/dsm-72/ipos"
