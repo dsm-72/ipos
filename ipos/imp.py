@@ -502,6 +502,11 @@ class ImpSpec(ModuleSpec):
         updates = dict()
         for subspec in self.subspecs:
             updates.update(subspec.get_updates())
+
+        for name, fallback in self.fallbacks.items():
+            if name not in updates and not is_mod_or_var(name):
+                updates[name] = fallback
+
         globals().update(updates)
 
 # %% ../nbs/00_core.ipynb 14
