@@ -1,0 +1,93 @@
+[
+  {
+    "objectID": "utils.html#utils",
+    "href": "utils.html#utils",
+    "title": "Utils",
+    "section": "Utils",
+    "text": "Utils\n/opt/hostedtoolcache/Python/3.10.12/x64/lib/python3.10/site-packages/fastcore/docscrape.py:225: UserWarning: Unknown section Raises\n  else: warn(msg)\n\nsource\n\ngetmodule\n\n getmodule (name:str, lazy:Optional[bool]=False, alias:Optional[str]=None,\n            inject:Optional[bool]=True, inject_both:Optional[bool]=False)\n\nGet a module by name, importing it if necessary.\n\n\n\n\n\n\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\nname\nstr\n\nName of the module to get.\n\n\nlazy\nOptional\nFalse\nIf True, use lazy import; if False, use regular import.\n\n\nalias\nOptional\nNone\nAlias to use for the module.\n\n\ninject\nOptional\nTrue\nIf True, inject the module into sys.modules.\n\n\ninject_both\nOptional\nFalse\nIf True, inject the module into sys.modules with both its original name and alias.\n\n\nReturns\nmodule\n\nThe requested module.\n\n\n\n\nsource\n\n\nmodule_from_str\n\n module_from_str (name:str, lazy:bool=False, alias:Optional[str]=None,\n                  inject:Optional[bool]=True,\n                  inject_both:Optional[bool]=False)\n\nImport a module from a given string name.\n\n\n\n\n\n\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\nname\nstr\n\nName of the module to import.\n\n\nlazy\nbool\nFalse\nIf True, use lazy import; if False, use regular import.\n\n\nalias\nOptional\nNone\nAlias to use for the module.\n\n\ninject\nOptional\nTrue\nIf True, inject the module into sys.modules.\n\n\ninject_both\nOptional\nFalse\nIf True, inject the module into sys.modules with both its original name and alias.\n\n\nReturns\nmodule\n\nThe imported module.\n\n\n\n\nsource\n\n\nloader_from_spec\n\n loader_from_spec (spec:_frozen_importlib.ModuleSpec, lazy:bool=False)\n\nGet a loader from a given module specification.\n\n\n\n\n\n\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\nspec\nModuleSpec\n\nModule specification from which to get the loader.\n\n\nlazy\nbool\nFalse\nIf True, return a LazyLoader; if False, return the original loader.\n\n\nReturns\nLoader\n\nLoader for the module.\n\n\n\n\nsource\n\n\nis_mod_avail\n\n is_mod_avail (name:str)\n\nCheck if a given module name is available for import.\n\n\n\n\n\n\n\n\n\nType\nDetails\n\n\n\n\nname\nstr\nName of the module to be checked.\n\n\nReturns\nbool\nTrue if the module is available for import, False otherwise.\n\n\n\n\nsource\n\n\nis_mod_or_var\n\n is_mod_or_var (name:str)\n\nCheck if a given name exists either as a module or a variable.\n\n\n\n\n\n\n\n\n\nType\nDetails\n\n\n\n\nname\nstr\nName to be checked.\n\n\nReturns\nbool\nTrue if the name exists either as a module or a variable, False otherwise.\n\n\n\n\nsource\n\n\nis_var_imp\n\n is_var_imp (name:str)\n\nCheck if a given variable name exists in the global namespace.\n\n\n\n\n\n\n\n\n\nType\nDetails\n\n\n\n\nname\nstr\nName of the variable to be checked.\n\n\nReturns\nbool\nTrue if the variable exists in the global namespace, False otherwise.\n\n\n\n\nsource\n\n\nis_mod_imp\n\n is_mod_imp (name:str)\n\nCheck if a given module name is in the system module list.\n\n\n\n\n\n\n\n\n\nType\nDetails\n\n\n\n\nname\nstr\nName of the module to be checked.\n\n\nReturns\nbool\nTrue if the module is in the system module list, False otherwise.\n\n\n\n\nsource\n\n\nis_mod\n\n is_mod (module:Any)\n\nCheck if a given object is a module.\n\n\n\n\n\n\n\n\n\nType\nDetails\n\n\n\n\nmodule\nAny\nObject to be checked.\n\n\nReturns\nbool\nTrue if the object is a module, False otherwise.\n\n\n\n\nsource\n\n\nmodjoin\n\n modjoin (*parts:str)\n\nJoin module name parts into a valid module path.\n\n\n\n\nType\nDetails\n\n\n\n\nparts\nstr\n\n\n\nReturns\nstr\nValid module path."
+  },
+  {
+    "objectID": "imp.html#impitem",
+    "href": "imp.html#impitem",
+    "title": "imp",
+    "section": "ImpItem",
+    "text": "ImpItem\nfor aliasing items to import similar to item as alias\n/opt/hostedtoolcache/Python/3.10.12/x64/lib/python3.10/site-packages/fastcore/docscrape.py:225: UserWarning: Unknown section Attributes\n  else: warn(msg)\n\nsource\n\nImpItem\n\n ImpItem (item:str='')\n\nA class to represent an item in the import specification."
+  },
+  {
+    "objectID": "imp.html#fallbacks",
+    "href": "imp.html#fallbacks",
+    "title": "imp",
+    "section": "Fallbacks",
+    "text": "Fallbacks\n\nsource\n\nFallbacks\n\n Fallbacks ()\n\n\nFallbacks.from_dict({'a': 1})\n\nFallbacks()\n\n\n\nFallbacks.from_items([\n    ImpItem('os as py_os'),\n    ImpItem('Tree as my_tree'),\n]).items()\n\ndict_items([('py_os', None), ('my_tree', None)])"
+  },
+  {
+    "objectID": "imp.html#baseimp",
+    "href": "imp.html#baseimp",
+    "title": "imp",
+    "section": "BaseImp",
+    "text": "BaseImp\nfor reducing code reuse\n\nsource\n\nBaseImp\n\n BaseImp (namespace:Dict[str,Any]=&lt;factory&gt;)\n\nImport Module class.\nThis class facilitates dynamic import of modules and their attributes."
+  },
+  {
+    "objectID": "imp.html#impsubspec",
+    "href": "imp.html#impsubspec",
+    "title": "imp",
+    "section": "ImpSubSpec",
+    "text": "ImpSubSpec\n\nsource\n\nImpSubSpec\n\n ImpSubSpec (name:str, stub:str,\n             items:Optional[List[ForwardRef('ImpItem')]]=&lt;factory&gt;, fallba\n             cks:Union[ForwardRef('Fallbacks'),Dict[str,Any],NoneType]=&lt;fa\n             ctory&gt;, namespace:Dict[str,Any]=&lt;factory&gt;)\n\nA class to represent a sub-specification of the import.\n\nImpSubSpec.from_str('from rich.tree import Tree as rich_tree')\n\nImpSubSpec(name='rich', stub='tree', items=[ImpItem(name='Tree', nick='rich_tree')])\n\n\n\nImpSubSpec('rich', '', [ImpItem('get_console')])\n\nImpSubSpec(name='rich', stub='', items=[ImpItem(name='get_console', nick='')])\n\n\n\nImpSubSpec.from_str('from rich import get_console')\n\nImpSubSpec(name='rich', stub='', items=[ImpItem(name='get_console', nick='')])"
+  },
+  {
+    "objectID": "imp.html#impspec",
+    "href": "imp.html#impspec",
+    "title": "imp",
+    "section": "ImpSpec",
+    "text": "ImpSpec\n\nsource\n\nImpSpec\n\n ImpSpec (name:str, nick:Optional[str]=None, lazy:Optional[bool]=True,\n          subspecs:Optional[List[ForwardRef('ImpSubSpec')]]=&lt;factory&gt;, fal\n          lbacks:Union[ForwardRef('Fallbacks'),Dict[str,Any],NoneType]=&lt;fa\n          ctory&gt;, namespace:Dict[str,Any]=&lt;factory&gt;)\n\nA class to represent an import specification."
+  },
+  {
+    "objectID": "imp.html#imp",
+    "href": "imp.html#imp",
+    "title": "imp",
+    "section": "Imp",
+    "text": "Imp\n/opt/hostedtoolcache/Python/3.10.12/x64/lib/python3.10/site-packages/fastcore/docscrape.py:225: UserWarning: Unknown section Methods\n  else: warn(msg)\n\nsource\n\nImp\n\n Imp (name:str, nick:Optional[str]=None,\n      subspecs:Optional[List[__main__.ImpSubSpec]]=&lt;factory&gt;,\n      fallbacks:Optional[Dict[str,Any]]=&lt;factory&gt;,\n      lazy:Optional[bool]=True, delay:Optional[bool]=False,\n      namespace:Dict[str,Any]=&lt;factory&gt;,\n      _squash_name_errors:Optional[bool]=True,\n      _reload:Optional[bool]=False)\n\nImport Module class.\nThis class facilitates dynamic import of modules and their attributes.\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\nname\nstr\n\nThe name of the module to import.\n\n\nnick\nOptional\nNone\nThe alias of the module to import.\n\n\nsubspecs\nOptional\n\nA list of ImpSubSpec objects representing additional specifications for import.\n\n\nfallbacks\nOptional\n\nA dictionary of fallback values for import failures.\n\n\nlazy\nOptional\nTrue\nWhether or not to use lazy import.\n\n\ndelay\nOptional\nFalse\n\n\n\nnamespace\nDict\n\n\n\n\n_squash_name_errors\nOptional\nTrue\n\n\n\n_reload\nOptional\nFalse\n\n\n\n\n\n\nExample\n\nimp_rich = Imp(\n    'rich', 'rc',\n    subspecs=[\n        ImpSubSpec.from_str('from rich.tree import Tree as rich_tree'),\n        ImpSubSpec.from_str('from rich.text import Text'),\n        ImpSubSpec.from_str('from rich.markup import espace'),\n        ImpSubSpec.from_str('from rich.filesize import decimal'),\n        ImpSubSpec.from_str('from rich.filesize import Console'),\n        ImpSubSpec.from_str('from rich.progress import Progress'),\n        # ImpSubSpec.from_str('from rich import get_console')\n        ImpSubSpec('rich', '', [ImpItem('get_console')])\n    ],\n    fallbacks={\n        'rich_tree': Any,\n        'Text': Any,\n    },\n    delay=True,\n)\n\n\nText\n\nNameError: name 'Text' is not defined\n\n\n\nimp_rich.load()\n\nImp(name='rich', nick='rc', lazy=True, delay=True, _squash_name_errors=True, _reload=False)\n\n\n\nText\n\nrich.text.Text\n\n\n\n\nPiecewise\n\n# Define a sub specification to import 'sqrt' and 'pi' from 'math' module\nsubspec = ImpSubSpec('math', '', items=[ImpItem('sqrt'), ImpItem('sqrt')])\nsubspec\n\nImpSubSpec(name='math', stub='', items=[ImpItem(name='sqrt', nick=''), ImpItem(name='sqrt', nick='')])\n\n\n\n# Create an Imp instance\nimp = Imp(name='math', nick=None, subspecs=[subspec])\n\n# Load the modules specified in the Imp instance\nimp.load()\n\n# Now you can access 'sqrt' and 'pi' from the 'math' module\nsqrt = imp['sqrt']\npi = imp['pi']\n\n\nprint(sqrt(16))  # outputs: 4.0\nprint(pi)  # outputs: 3.141592653589793\n\n4.0\n3.141592653589793\n\n\n\n\nSubclass Example\n\n@dataclass\nclass MathImp(Imp):\n    name: str = 'math'\n    nick: str = 'm'\n    subspecs: ImpSubSpecType = field(default_factory = lambda: [\n        ImpSubSpec('math', '', [ImpItem('inf')]),\n    ])\n\n\nmimp = MathImp().load()\nmimp._module\n\n&lt;module 'math' from '/Users/solst/mambaforge/envs/ipos/lib/python3.11/lib-dynload/math.cpython-311-darwin.so'&gt;"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "ipos",
+    "section": "",
+    "text": "# create conda environment\n$ mamba env create -f env.yml\n\n# update conda environment\n$ mamba env update -n ipos --file env.yml\n\n\n\npip install -e .\n\n# install from pypi\npip install ipos\n\n\n\n# activate conda environment\n$ conda activate ipos\n\n# make sure the ipos package is installed in development mode\n$ pip install -e .\n\n# make changes under nbs/ directory\n# ...\n\n# compile to have changes apply to the ipos package\n$ nbdev_prepare\n\n\n\n# publish to pypi\n$ nbdev_pypi\n\n# publish to conda\n$ nbdev_conda --build_args '-c conda-forge'"
+  },
+  {
+    "objectID": "index.html#developer-guide",
+    "href": "index.html#developer-guide",
+    "title": "ipos",
+    "section": "",
+    "text": "# create conda environment\n$ mamba env create -f env.yml\n\n# update conda environment\n$ mamba env update -n ipos --file env.yml\n\n\n\npip install -e .\n\n# install from pypi\npip install ipos\n\n\n\n# activate conda environment\n$ conda activate ipos\n\n# make sure the ipos package is installed in development mode\n$ pip install -e .\n\n# make changes under nbs/ directory\n# ...\n\n# compile to have changes apply to the ipos package\n$ nbdev_prepare\n\n\n\n# publish to pypi\n$ nbdev_pypi\n\n# publish to conda\n$ nbdev_conda --build_args '-c conda-forge'"
+  },
+  {
+    "objectID": "index.html#installation",
+    "href": "index.html#installation",
+    "title": "ipos",
+    "section": "Installation",
+    "text": "Installation\nInstall latest from the GitHub repository:\n$ pip install git+https://github.com/dsm-72/ipos.git\nor from conda\n$ conda install -c dsm-72 ipos\nor from pypi\n$ pip install ipos"
+  },
+  {
+    "objectID": "index.html#documentation",
+    "href": "index.html#documentation",
+    "title": "ipos",
+    "section": "Documentation",
+    "text": "Documentation\nDocumentation can be found hosted on GitHub repository pages. Additionally you can find package manager specific guidelines on conda and pypi respectively."
+  },
+  {
+    "objectID": "gimp.html",
+    "href": "gimp.html",
+    "title": "Global Imp",
+    "section": "",
+    "text": "/opt/hostedtoolcache/Python/3.10.12/x64/lib/python3.10/site-packages/fastcore/docscrape.py:225: UserWarning: Unknown section Notes\n  else: warn(msg)\n\nsource\n\n\n\n GImp ()\n\n\nwith GImp() as gimp:\n    \n    import os, signal, atexit, threading, _thread\n    # whatever you want it won't remain local\n    # if only \n    gimp()\n    # is called before the end of this block\n\n# there you go: use os, signal, ... from whatever place of the module"
+  },
+  {
+    "objectID": "gimp.html#global-context-manager",
+    "href": "gimp.html#global-context-manager",
+    "title": "Global Imp",
+    "section": "",
+    "text": "/opt/hostedtoolcache/Python/3.10.12/x64/lib/python3.10/site-packages/fastcore/docscrape.py:225: UserWarning: Unknown section Notes\n  else: warn(msg)\n\nsource\n\n\n\n GImp ()\n\n\nwith GImp() as gimp:\n    \n    import os, signal, atexit, threading, _thread\n    # whatever you want it won't remain local\n    # if only \n    gimp()\n    # is called before the end of this block\n\n# there you go: use os, signal, ... from whatever place of the module"
+  }
+]
